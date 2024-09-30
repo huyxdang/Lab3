@@ -23,7 +23,7 @@ public class Main {
      */
     // Define constant variable QUIT
 
-    public static final String QUIT = "quit";
+    public static final String QUIT_COMMAND = "quit";
 
     public static void main(String[] args) {
 
@@ -45,14 +45,14 @@ public class Main {
     public static void runProgram(Translator translator) {
         while (true) {
             String country = promptForCountry(translator);
-            if (QUIT.equals(country)) {
+            if (QUIT_COMMAND.equals(country)) {
                 break;
             }
             // TODO Task: Once you switch promptForCountry so that it returns the country
             //            name rather than the 3-letter country code, you will need to
             //            convert it back to its 3-letter country code when calling promptForLanguage
             String language = promptForLanguage(translator, country);
-            if (QUIT.equals(language)) {
+            if (QUIT_COMMAND.equals(language)) {
                 break;
             }
             // TODO Task: Once you switch promptForLanguage so that it returns the language
@@ -65,7 +65,7 @@ public class Main {
             Scanner s = new Scanner(System.in);
             String textTyped = s.nextLine();
 
-            if (QUIT.equals(textTyped)){
+            if (QUIT_COMMAND.equals(textTyped)){
                 break;
             }
         }
