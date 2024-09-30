@@ -2,6 +2,8 @@ package org.translation;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Main class for this program.
@@ -21,7 +23,7 @@ public class Main {
      */
     // Define constant variable QUIT
 
-    public static final string QUIT = "quit";
+    public static final String QUIT = "quit";
 
     public static void main(String[] args) {
 
@@ -43,7 +45,6 @@ public class Main {
     public static void runProgram(Translator translator) {
         while (true) {
             String country = promptForCountry(translator);
-            // TODO Checkstyle: String literal expressions should be on the left side of an equals comparison
             if (QUIT.equals(country)) {
                 break;
             }
@@ -70,15 +71,30 @@ public class Main {
         }
     }
 
+    private static void readCountryCode(String filename){
+
+    }
+
     // Note: CheckStyle is configured so that we don't need javadoc for private methods
     private static String promptForCountry(Translator translator) {
+        // Get the list of countries
         List<String> countries = translator.getCountries();
-        // TODO Task: replace the following println call, sort the countries alphabetically,
-        //            and print them out; one per line
-        //      hint: class Collections provides a static sort method
-        // TODO Task: convert the country codes to the actual country names before sorting
-        System.out.println(countries);
 
+        // Create an instance of CountryCodeConverter
+        CountryCodeConverter converter = new CountryCodeConverter();
+
+        // Convert country codes to actual country names using fromCountryCode
+        List<String> countryNames = new ArrayList<>();
+        for (String code : countries) {
+            // Need instance of converter for fromCountryCode
+            countryNames.add(converter.fromCountryCode(code));
+        }
+
+        Collections.sort(countryNames);
+        // Print every country in list countryNames
+        for (String country: countryNames){
+            System.out.println(country);
+        }
         System.out.println("select a country from above:");
 
         Scanner s = new Scanner(System.in);
@@ -89,13 +105,26 @@ public class Main {
     // Note: CheckStyle is configured so that we don't need javadoc for private methods
     private static String promptForLanguage(Translator translator, String country) {
 
-        // TODO Task: replace the line below so that we sort the languages alphabetically and print them out; one per line
-        // TODO Task: convert the language codes to the actual language names before sorting
-        System.out.println(translator.getCountryLanguages(country));
+        List<String> languageCodes = translator.getCountryLanguages(country);
+        List<String> languageNames = new ArrayList<>();
+        LanguageCodeConverter converter = new LanguageCodeConverter();
+        // Convert language codes to actual language names
+        for (String code : languageCodes) {
+            languageNames.add(converter.fromLanguageCode(code)); // Assuming you have a method to convert codes to names
+        }
 
-        System.out.println("select a language from above:");
+        // Sort the language names alphabetically
+        Collections.sort(languageNames);
 
+        // Print each language name on a new line
+        for (String language : languageNames) {
+            System.out.println(language);
+        }
+
+        System.out.println("Select a language from above:");
+
+        // Get the user's choice of language
         Scanner s = new Scanner(System.in);
         return s.nextLine();
     }
-}
+    }
